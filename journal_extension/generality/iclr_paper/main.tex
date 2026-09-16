@@ -29,29 +29,27 @@
 \maketitle
 
 \begin{abstract}
-Generative image translation---harmonization, style transfer, synthetic-to-real
-adaptation---is almost universally evaluated with \emph{distributional fidelity}
-metrics such as the Fr\'echet Inception Distance (FID). We show, in a controlled
-setting, that improving fidelity does not imply improving downstream utility, and
-that for \emph{learned} translation the two systematically trade off. Holding a
-downstream model \emph{frozen}, we measure a fidelity axis (FID to the target
-domain) and a utility axis (the frozen model's task metric) on identical inputs.
-Across two domains (synthetic-to-real driving and multi-site brain-tumor MRI) and
-two generative families (adversarial CycleGAN and diffusion SDEdit), learned
-translation lowers FID while degrading the downstream task metric, whereas a
-non-learned baseline (histogram / color transfer) preserves the task metric
-without improving FID. Using SDEdit's noise-strength parameter as a continuous
-knob, we trace a monotonic FID--utility frontier ($N{=}1000$, three seeds): no
-learned setting reaches the high-fidelity, high-utility region, and none
-Pareto-dominates the non-learned baseline. An empty-prompt ablation shows the
-utility loss persists even when fidelity is \emph{not} improved, isolating the
-effect to the learned generative prior rather than any conditioning signal. A
-structure-preserving baseline (ControlNet conditioned on edges) does not rescue
-utility either: it lands on the learned frontier, confirming that generic
-structural conditioning is insufficient---only injecting the task labels
-themselves recovers utility, which concedes our thesis. Our contribution is not a
-new method but a \emph{measurement}: a general, architecture-agnostic dissociation
-between what fidelity metrics reward and what downstream tasks need.
+Image translation for harmonization and domain adaptation is routinely selected on
+distributional fidelity metrics such as the Fr\'echet Inception Distance (FID), on the
+assumption that a more target-like image is more useful: a team can lower FID and ship a
+model that is worse at the task. That fidelity can mis-rank generators is known; we make a
+sharper, mechanistic claim: the utility loss is a property of the learned
+distribution-matching \emph{objective} itself, not of any architecture, which is why it
+survives the move from GANs to diffusion. Our instrument is a \emph{frozen} downstream
+evaluator scored alongside FID on identical inputs, plus a matched non-learned control. On
+GTA5$\rightarrow$Cityscapes ($N{=}1000$, frozen SegFormer), CycleGAN more than halves FID
+(137.2$\rightarrow$65.5) while mIoU falls 0.380$\rightarrow$0.167; the non-learned control
+preserves mIoU (0.363) without improving FID. Sweeping SDEdit's noise strength traces a
+monotonic frontier: FID 145.1$\rightarrow$88.0 as mIoU falls 0.323$\rightarrow$0.106, with
+seed standard deviation at most 0.005 mIoU. Two controls close the obvious escapes: with an
+empty prompt, fidelity is worse than the untranslated source (FID 154.2) yet mIoU still
+collapses (0.170), decoupling the damage from any fidelity gain; and edge-conditioned
+ControlNet does not escape the frontier (mIoU 0.221 at FID 133.2, versus 0.289 at matched
+FID). Multi-site brain-tumor MRI reproduces it: frozen nnU-Net tumor Dice falls
+0.682$\rightarrow$0.064 under learned harmonization but holds at 0.669 non-learned. Across
+both generative families and both domains, the low-FID/high-utility corner stayed empty. We
+do not claim fidelity is uninformative, only that it is non-monotone in utility once a
+learned prior enters the loop; our contribution is a measurement and a protocol, not a method.
 \end{abstract}
 
 \section{Introduction}
