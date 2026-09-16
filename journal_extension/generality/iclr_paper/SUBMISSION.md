@@ -24,19 +24,25 @@ Revision button before the full-paper deadline. So 18 Sep needs only the fields 
 ## Fields to paste into OpenReview (ready now)
 
 **Title** (max 250 chars)
-> Fidelity Is Not Utility: A Controlled Dissociation in Learned Image Translation
+> Distribution Matching Is Not Task Preservation: Auditing Generative Models Inside Data Pipelines
 
 **TL;DR** (optional, max 250 chars)
-> Under a frozen downstream evaluator, learned image translation buys FID by destroying task utility — across a GAN and a diffusion model, in driving and medical MRI; non-learned baselines do not.
+> Selecting a generative data transform by distributional similarity destroys task information; a frozen downstream model plus a no-learned-prior control exposes it cheaply.
 
 **Keywords** (REQUIRED)
-> image-to-image translation, evaluation of generative models, FID, downstream utility, domain adaptation, diffusion models, medical image harmonization, semantic segmentation
+> distribution matching, generative model evaluation, downstream task utility, data-centric machine learning, synthetic data, distribution shift, evaluation protocols, domain adaptation
 
-**Primary area** — suggest `datasets and benchmarks` (this is a measurement/protocol paper);
+**Primary area** — suggest `datasets and benchmarks` (measurement/protocol paper);
 `generative models` is the reasonable alternative. Pick from the live dropdown.
 
-**Abstract** (REQUIRED, max 5000 chars — ours is ~1.8k chars / 269 words): see `abstract.txt`,
-identical to the abstract compiled in `main.pdf`.
+**Abstract** (REQUIRED, max 5000 chars — ours is ~197 words): see `abstract.txt`,
+identical to the abstract compiled in `submission.pdf`.
+
+**REFRAMED 2026-09-16 per advisor feedback:** the earlier abstract was rejected by Dr. Liu as
+"too trivial and too much detail" and too image-specific for ICLR (risking mis-assigned
+reviewers). The current version is general (generative models in data pipelines; vision is the
+testbed, not the subject), plain-language, 3 numbers instead of 12, and carries novelty via a
+mechanism claim rather than a metric complaint.
 
 ## Before the FULL-PAPER deadline (25 Sep) — not needed for 18 Sep
 
