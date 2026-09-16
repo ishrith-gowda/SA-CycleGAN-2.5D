@@ -40,11 +40,13 @@ identical to the abstract compiled in `main.pdf`.
 
 ## Before the FULL-PAPER deadline (25 Sep) — not needed for 18 Sep
 
-- [ ] **Anonymize.** Port from `arxiv.sty` to the official ICLR template (the template renders
-      "Anonymous authors / Paper under double-blind review" unless the final-copy flag is set).
-      The ONLY hazard in our source is the author block at `main.tex` lines 18-25 — verified: no
-      GitHub/repo URLs, no acknowledgements section, Reproducibility Statement leaks nothing.
-      **Author identity in text or supplement = desk reject.**
+- [x] **Anonymize — DONE.** Ported to the official ICLR 2027 template. Single source, two builds:
+      `body.tex` holds all content; `main.tex` is the non-anonymous preprint build (for sharing with
+      collaborators) and **`submission.tex` is the anonymous ICLR build** (`\iclrfinalcopy` left
+      commented, so the template renders "Anonymous authors / Paper under double-blind review").
+      Verified on the compiled `submission.pdf`: ICLR 2027 header present, "Anonymous authors" block
+      present, and zero occurrences of author names, institutions, emails, or repo URLs.
+      **Submit `submission.pdf`, never `main.pdf`.**
 - [ ] Main text ≤ 9 pages (currently **6** — comfortable). References/appendices unlimited.
 - [ ] All co-authors need OpenReview profiles. **No authors may be added or removed after the
       abstract deadline** — so Dr. Liu must be on the record by 18 Sep.
