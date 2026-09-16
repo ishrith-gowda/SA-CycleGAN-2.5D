@@ -271,3 +271,46 @@ All conditions regenerate from a single command; seeds are fixed and logged; fro
 evaluators are referenced by checkpoint id (SegFormer-b4, nnU-Net); FID uses
 clean-fid at a fixed $N$. Code, configs, and the $N{=}1000$ result set are released
 with the paper.
+
+\appendix
+\section{Full per-class IoU}
+\label{app:perclass}
+Table~\ref{tab:perclass-full} reports every Cityscapes class, the breakdown behind
+Table~\ref{tab:perclass}. SDEdit and ControlNet columns are means over the three seeds. Classes
+with very small raw IoU (\emph{train}, \emph{bicycle}) are near-absent in the GTA5 subset; a
+relative change computed off such a baseline is noise, which is why the grouped statistics in
+Table~\ref{tab:perclass} exclude classes with raw IoU below $0.05$. The selectivity is visible
+directly: \emph{road} loses little under every condition, while \emph{traffic light},
+\emph{traffic sign}, \emph{person} and \emph{rider} are almost entirely destroyed by the learned
+translations and almost untouched by the non-learned control.
+
+\begin{table}[h]
+\centering
+\caption{Per-class IoU under a frozen SegFormer-b4, $N{=}1000$.}
+\label{tab:perclass-full}
+\begin{tabular}{lrrrrr}
+\toprule
+class & raw & color match & CycleGAN & SDEdit 0.50 & ControlNet \\
+\midrule
+road & 0.937 & 0.932 & 0.843 & 0.845 & 0.884 \\
+sidewalk & 0.540 & 0.502 & 0.202 & 0.280 & 0.309 \\
+building & 0.711 & 0.681 & 0.356 & 0.504 & 0.505 \\
+wall & 0.356 & 0.315 & 0.089 & 0.077 & 0.094 \\
+fence & 0.102 & 0.111 & 0.020 & 0.021 & 0.031 \\
+pole & 0.269 & 0.252 & 0.112 & 0.095 & 0.159 \\
+traffic light & 0.073 & 0.067 & 0.008 & 0.008 & 0.012 \\
+traffic sign & 0.069 & 0.063 & 0.012 & 0.017 & 0.022 \\
+vegetation & 0.649 & 0.625 & 0.364 & 0.455 & 0.427 \\
+terrain & 0.227 & 0.159 & 0.083 & 0.050 & 0.011 \\
+sky & 0.901 & 0.883 & 0.121 & 0.750 & 0.755 \\
+person & 0.270 & 0.240 & 0.035 & 0.024 & 0.111 \\
+rider & 0.182 & 0.156 & 0.028 & 0.015 & 0.085 \\
+car & 0.737 & 0.725 & 0.384 & 0.226 & 0.447 \\
+truck & 0.666 & 0.608 & 0.198 & 0.197 & 0.175 \\
+bus & 0.248 & 0.259 & 0.206 & 0.097 & 0.127 \\
+train & 0.002 & 0.002 & 0.000 & 0.001 & 0.001 \\
+motorcycle & 0.279 & 0.303 & 0.101 & 0.016 & 0.046 \\
+bicycle & 0.008 & 0.007 & 0.001 & 0.001 & 0.004 \\
+\bottomrule
+\end{tabular}
+\end{table}
