@@ -238,6 +238,39 @@ headline numbers use the frozen independent nnU-Net; a separate
 method-development evaluator ranks the symmetric loss as the best-preserving
 \emph{learned} harmonizer, which belongs to a companion method paper.
 
+
+\subsection{Where the damage falls}
+\label{sec:perclass}
+The headline mIoU collapse hides structure. Breaking IoU out per class and grouping the 19
+Cityscapes classes into large amorphous regions and thin, small, label-carrying objects
+(Table~\ref{tab:perclass}) shows the degradation is highly \emph{selective}. The non-learned
+control loses a few percent on both groups, almost uniformly. Every learned translation instead
+loses far more on the thin classes than on the large ones: SDEdit at strength 0.50 costs 27\% of
+large-region IoU but 83\% of thin-object IoU, and CycleGAN 50\% against 70\%. Poles, traffic
+lights, traffic signs, riders and motorcycles are precisely the structures a segmenter needs and
+precisely what the learned prior does not preserve. Edge-conditioned ControlNet sits in between
+(27\% / 63\%): conditioning on edges recovers some thin structure, consistent with
+Section~\ref{sec:setup}'s argument that what is missing is a non-distributional constraint, but
+not enough to escape the frontier.
+
+\begin{table}[t]
+\centering
+\caption{Per-class IoU grouped into large amorphous regions (road, sidewalk, building,
+vegetation, terrain, sky) and thin/small label-carrying objects (pole, traffic light, traffic
+sign, rider, motorcycle); classes whose raw IoU is below $0.05$ are excluded, since a ratio off a
+near-zero baseline is noise. The non-learned control degrades both groups mildly and almost
+uniformly; every learned translation degrades the thin classes far more than the large ones.}
+\label{tab:perclass}
+\begin{tabular}{lrrrrr}
+\toprule
+group & raw & color match & CycleGAN & SDEdit 0.50 & ControlNet \\
+\midrule
+large regions        & 0.661 & 0.630 ($-5\%$)  & 0.328 ($-50\%$) & 0.481 ($-27\%$) & 0.482 ($-27\%$) \\
+thin / small objects & 0.174 & 0.168 ($-4\%$)  & 0.052 ($-70\%$) & 0.030 ($-83\%$) & 0.065 ($-63\%$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{Analysis}
 The learned objective optimizes appearance under a distribution/adversarial or
 denoising target with no term guaranteeing task-relevant signal survives. SDEdit
