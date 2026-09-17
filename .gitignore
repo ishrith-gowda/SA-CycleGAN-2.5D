@@ -162,3 +162,13 @@ cluster_backup/
 # sphinx documentation build artifacts
 docs/_build/
 docs/_autosummary/
+
+# large qualitative composite (regenerable; the compact .jpg is committed + used by the paper)
+journal_extension/generality/figures/qualitative.png
+
+# LaTeX build artifacts (paper sources + final PDFs are tracked; intermediates are not)
+journal_extension/generality/iclr_paper/*.aux
+journal_extension/generality/iclr_paper/*.log
+journal_extension/generality/iclr_paper/*.out
+journal_extension/generality/iclr_paper/*.blg
+journal_extension/generality/iclr_paper/*.bbl
