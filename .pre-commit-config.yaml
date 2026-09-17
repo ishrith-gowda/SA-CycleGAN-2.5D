@@ -3,8 +3,14 @@
 # run all: pre-commit run --all-files
 
 # pre-commit operates on source files only; output/data dirs are excluded
-# (consistent with the ruff exclude in pyproject.toml).
-exclude: '^(figures|results|evaluation_results|experiments|experiments_from_gpu|baseline_training_progress|arxiv|huggingface|preprocessed|preprocessed_registered|data|checkpoints|runs|mlruns|journal_extension/(figures|results|experiments))/'
+# (consistent with the ruff exclude in pyproject.toml). vendored upstream LaTeX template
+# files (the official ICLR/arXiv style + bst) are excluded too: they are third-party and must
+# stay byte-identical to upstream, so our hygiene hooks must not rewrite them.
+exclude: |
+  (?x)^(
+    (figures|results|evaluation_results|experiments|experiments_from_gpu|baseline_training_progress|arxiv|huggingface|preprocessed|preprocessed_registered|data|checkpoints|runs|mlruns|journal_extension/(figures|results|experiments))/
+    |journal_extension/generality/iclr_paper/(iclr2027_conference\.(sty|bst)|natbib\.sty|fancyhdr\.sty|math_commands\.tex|arxiv\.sty)$
+  )
 
 repos:
   # general file hygiene
